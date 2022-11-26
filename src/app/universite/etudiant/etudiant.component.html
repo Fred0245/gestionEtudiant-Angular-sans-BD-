@@ -1,0 +1,391 @@
+<main id="content" role="main" class="main">
+    <!-- Content -->
+    <div class="content container-fluid">
+
+        <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h1 class="page-header-title">Gestion des étudiants</h1>
+              </div>
+              <!-- End Col -->
+    
+              <div class="col-auto" *ngIf="afficherListe ==true">
+                <a class="btn btn-primary" (click)="afficherFormulaire()" data-bs-toggle="modal" data-bs-target="#inviteUserModal">
+                  <i class="bi-person-plus-fill me-1"></i> Ajouter
+                </a>
+              </div>
+
+              <div class="col-auto" *ngIf="afficherListe ==false">
+                <a class="btn btn-primary" (click)="afficherEtudiants()" data-bs-toggle="modal" data-bs-target="#inviteUserModal">
+                  <i class="bi-person-plus-fill me-1"></i> voir les etudiants
+                </a>
+              </div>
+              <!-- End Col -->
+            </div>
+            <!-- End Row -->
+          </div>
+
+          <div  *ngIf="afficherListe ==false">
+
+            <form (ngSubmit)="ajouter()">
+              <div class="row justify-content-lg-center">
+                <div class="col-lg-12">
+                  <!-- Step -->
+                 
+                  <!-- End Step -->
+      
+                  <!-- Content Step Form -->
+                  <div id="addUserStepFormContent">
+                    <!-- Card -->
+                    <div id="" class="card card-lg active">
+                      <!-- Body -->
+                      <div class="card-body">
+                        <!-- Form -->
+                        <div class="row mb-4">
+                          <label class="col-sm-3 col-form-label form-label">Ajout d'un étudiant</label>
+      
+                          <div class="col-sm-9">
+                            <div class="d-flex align-items-center">
+                              <!-- Avatar -->
+                              <label class="avatar avatar-xl avatar-circle avatar-uploader me-5" for="avatarUploader">
+                                <img id="avatarImg" style="margin-right:400px;" class="avatar-img" src="../../../assets/img/160x160/img1.jpg" alt="Image Description">
+      
+                             
+      
+                                <span class="avatar-uploader-trigger">
+                                  <i class="bi-pencil avatar-uploader-icon shadow-sm"></i>
+                                </span>
+                              </label>
+                              <!-- End Avatar -->
+      
+                              <button type="button" class="js-file-attach-reset-img btn btn-white">Delete</button>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- End Form -->
+      
+                   
+       
+                        <!-- Form -->
+                        <div class="row mb-4">
+                          <label for="organizationLabel" class="col-sm-3 col-form-label form-label">Nom</label>
+      
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" [(ngModel)]="etudiant.nom"  name="organization" id="organizationLabel" placeholder="nom.." aria-label="Htmlstream">
+                          </div>
+                        </div>
+                        <!-- End Form -->
+      
+                        <!-- Form -->
+                        <div class="row mb-4">
+                          <label for="departmentLabel" class="col-sm-3 col-form-label form-label">Prenom</label>
+      
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" [(ngModel)]="etudiant.prenom"  name="department" id="departmentLabel" placeholder="prenom.." aria-label="Human resources">
+                          </div>
+                        </div>
+    
+                        <div class="row mb-4">
+                            <label for="departmentLabel" class="col-sm-3 col-form-label form-label">Filiére</label>
+                            <div class="col-sm-9">
+                            <div class="position-relative form-group">
+                              <select class="form-select form-control"  [(ngModel)]="etudiant.filiere.libelle" [ngModelOptions]="{standalone: true}" aria-label="Default select example">
+                      <option *ngFor="let filiere of filieres" value="{{filiere.libelle}}">{{filiere.libelle}}</option>
+                    </select>
+                  </div>
+                              
+                          </div>
+        
+                            <!-- <div class="col-sm-9">
+                              <input type="text" class="form-control" [(ngModel)]="etudiant.filiere"  name="department" id="departmentLabel" placeholder="filiére.." aria-label="Human resources">
+                            </div> -->
+                          </div>
+    
+                          <fieldset class="form-group">
+                            <div class="row">
+                              <legend class="col-form-label col-sm-2 pt-0">statut</legend>
+                              <div class="col-sm-10">
+                                <div class="form-check">
+                                  <input type="radio" class="form-check-input" [(ngModel)]="etudiant.status"  name="status" id="start">
+                                  <label class="form-check-label" for="start" >
+                                    Activé
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <input type="radio" class="form-check-input" [(ngModel)]="etudiant.status" type="radio" name="status" id="end" [value]=false>
+                                  <label class="form-check-label" for="end">Désactivé</label>
+                                </div>
+                              </div>
+                            </div>
+                          </fieldset>
+                        <!-- End Form -->
+      
+                        <!-- Form -->
+                     
+                        <!-- End Form -->
+                      </div>
+                      <!-- End Body -->
+      
+                      <!-- Footer -->
+                      <div class="ms-auto">
+                        <button style="margin: right 50px;" type="button" class="btn btn-white me-2">Save in drafts</button>
+                        <button type="submit" id="addUserFinishBtn" class="btn btn-outline-success mx-5 mb-2" >enregistrer</button>
+                      </div>
+                 
+                      <!-- End Footer -->
+                    </div>
+                    <!-- End Card -->
+      
+      
+                
+                  </div>
+                  <!-- End Content Step Form -->
+      
+                  <!-- Message Body -->
+                  
+                  <!-- End Message Body -->
+                </div>
+              </div>
+              <!-- End Row -->
+            </form>
+            <!-- End Step Form -->
+     
+        
+    </div>
+          
+          <div  *ngIf="afficherListe ==true">
+
+
+          <div class="card-header">
+            <div class="row justify-content-between align-items-center flex-grow-1">
+              <div class="col-md">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h4 class="card-header-title">Liste des étudiants</h4>
+  
+                  <!-- Datatable Info -->
+                  <div id="datatableCounterInfo" style="display: none;">
+                    <div class="d-flex align-items-center">
+                      <span class="fs-6 me-3">
+                        <span id="datatableCounter">0</span>
+                        Selected
+                      </span>
+                      <a class="btn btn-outline-danger btn-sm" href="javascript:;">
+                        <i class="tio-delete-outlined"></i> Delete
+                      </a>
+                    </div>
+                  </div>
+                  <!-- End Datatable Info -->
+                </div>
+              </div>
+              <!-- End Col -->
+  
+              <div class="col-auto">
+                <!-- Filter -->
+                <div class="row align-items-sm-center">
+                  <div class="col-sm-auto">
+                    <div class="row align-items-center gx-0">
+                      <div class="col">
+                        <span class="text-secondary me-2">Status:</span>
+                      </div>
+                      <!-- End Col -->
+  
+                      <div class="col-auto">
+                        <!-- Select -->
+                        <div class="tom-select-custom tom-select-custom-end">
+                          <select class="js-select js-datatable-filter form-select form-select-sm form-select-borderless" data-target-column-index="2" data-target-table="datatable" autocomplete="off" data-hs-tom-select-options='{
+                                    "searchInDropdown": false,
+                                    "hideSearch": true,
+                                    "dropdownWidth": "10rem"
+                                  }'>
+                            <option value="null" selected>All</option>
+                            <option value="successful">Successful</option>
+                            <option value="overdue">Overdue</option>
+                            <option value="pending">Pending</option>
+                          </select>
+                        </div>
+                        <!-- End Select -->
+                      </div>
+                      <!-- End Col -->
+                    </div>
+                    <!-- End Row -->
+                  </div>
+                  <!-- End Col -->
+  
+                  <div class="col-sm-auto">
+                    <div class="row align-items-center gx-0">
+                      <div class="col">
+                        <span class="text-secondary me-2">Signed up:</span>
+                      </div>
+                      <!-- End Col -->
+  
+                      <div class="col-auto">
+                        <!-- Select -->
+                        <div class="tom-select-custom tom-select-custom-end">
+                          <select class="js-select js-datatable-filter form-select form-select-sm form-select-borderless" data-target-column-index="5" data-target-table="datatable" autocomplete="off" data-hs-tom-select-options='{
+                                    "searchInDropdown": false,
+                                    "hideSearch": true,
+                                    "dropdownWidth": "10rem"
+                                  }'>
+                            <option value="null" selected>All</option>
+                            <option value="1 year ago">1 year ago</option>
+                            <option value="6 months ago">6 months ago</option>
+                          </select>
+                        </div>
+                        <!-- End Select -->
+                      </div>
+                      <!-- End Col -->
+                    </div>
+                    <!-- End Row -->
+                  </div>
+                  <!-- End Col -->
+  
+                  <div class="col-md">
+                    <form>
+                      <!-- Search -->
+                      <div class="input-group input-group-merge input-group-flush">
+                        <div class="input-group-prepend input-group-text">
+                          <i class="bi-search"></i>
+                        </div>
+                        <input id="datatableSearch" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="recherche" class="form-control" placeholder="Rechercher un étudiant..." aria-label="Rechercher un étudiant...">
+                      </div>
+                      <!-- End Search -->
+                    </form>
+                  </div>
+                  <!-- End Col -->
+                </div>
+                <!-- End Filter -->
+              </div>
+              <!-- End Col -->
+            </div>
+            <!-- End Row -->
+          </div>
+
+
+            <!-- Table -->
+  <div class="table-responsive datatable-custom">
+    <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+             "columnDefs": [{
+                "targets": [0, 1, 4],
+                "orderable": false
+              }],
+             "order": [],
+             "info": {
+               "totalQty": "#datatableWithPaginationInfoTotalQty"
+             },
+             "search": "#datatableSearch",
+             "entries": "#datatableEntries",
+             "pageLength": 8,
+             "isResponsive": false,
+             "isShowPaging": false,
+             "pagination": "datatablePagination"
+           }'>
+      <thead class="thead-light">
+        <tr>
+          <th scope="col" class="table-column-pe-0">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="datatableCheckAll">
+              <label class="form-check-label" for="datatableCheckAll"></label>
+            </div>
+          </th>
+          <th class="table-column-ps-0">Nom complet</th>
+          <th>Nom</th>
+          <th>Prenom</th>
+          <th>Filiére</th>
+          <th>Statut</th>
+          <th>Actions</th>
+          <th>inscription</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      
+
+        <tr *ngFor="let etudiant of etudiants|filter:recherche|paginate:{itemsPerPage:4,currentPage:nombre};let i=index">
+          <td class="table-column-pe-0">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="usersDataCheck3">
+              <label class="form-check-label" for="usersDataCheck3"></label>
+            </div>
+          </td>
+          <td class="table-column-ps-0">
+            <a class="d-flex align-items-center" href="user-profile.html">
+              <div class="flex-shrink-0">
+                <div class="avatar avatar-sm avatar-soft-primary avatar-circle">
+                  <span class="avatar-initials">{{i+1}}</span>
+                </div>
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h5 class="text-inherit mb-0">{{ etudiant.prenom}}  {{etudiant.nom}}</h5>
+              </div>
+            </a>
+          </td>
+          
+          <td>{{etudiant.nom}}</td>
+          <td>{{etudiant.prenom}}</td>
+          
+          <td>{{etudiant.filiere.libelle}}</td>
+          <td>
+            <span style="color: green;" *ngIf="etudiant.status==true"><i>activé </i></span>
+            <span style="color: red;" *ngIf="etudiant.status==false"><i>désactivé</i></span>
+          </td>
+
+          <td>
+            <button id="addUserFinishBtn"  class="btn btn-outline-danger" *ngIf="etudiant.status ==true" (click)="desactive(i)">Desactiver</button>
+            <button id="addUserFinishBtn" class="btn btn-outline-success" *ngIf="etudiant.status==false" (click)="active(i)" >&nbsp;&nbsp;Activer&nbsp;&nbsp;&nbsp;&nbsp;</button>
+        </td>
+
+        <td><button id="addUserFinishBtn"  class="btn btn-outline-primary"  (click)="inscrire(etudiant)">inscrire</button></td>
+      
+        </tr>
+
+
+   
+
+      </tbody>
+      
+    </table>
+  </div>
+  <!-- End Table -->
+    <!-- Footer -->
+    <div class="card-footer">
+      <!-- Pagination -->
+      <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+        <div class="col-sm mb-2 mb-sm-0">
+          <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+            <!-- <span class="me-2">Showing:</span> -->
+
+            <!-- Select -->
+            <div class="tom-select-custom">
+              <pagination-controls (pageChange)="nombre=$event" previousLabel="précédent" nextLabel="suivant"></pagination-controls>
+            </div>
+            <!-- End Select -->
+
+            <!-- <span class="text-secondary me-2">of</span> -->
+
+            <!-- Pagination Quantity -->
+            <span id="datatableWithPaginationInfoTotalQty"></span>
+          </div>
+        </div>
+        <!-- End Col -->
+
+        <div class="col-sm-auto">
+          <div class="d-flex justify-content-center justify-content-sm-end">
+            <!-- Pagination -->
+            <nav id="datatablePagination" aria-label="Activity pagination"></nav>
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Pagination -->
+    </div>
+    <!-- End Footer -->
+
+
+
+
+    </div>
+
+</div>
+
+</main>
+
